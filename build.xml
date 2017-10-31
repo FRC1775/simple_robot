@@ -27,18 +27,23 @@
 
 	<import file="${wpilib.ant.dir}/build.xml" />
 
-
 	<path id="classpath.test">
-		<pathelement location="${userLibs}/junit-4.12.jar" />
-		<pathelement location="${userLibs}/hamcrest-core-1.3.jar" />
-		<pathelement location="${build.dir}" />
+		<fileset file="${wpilib.jar}"/>
+		<fileset file="${networktables.jar}"/>
+		<fileset file="${opencv.jar}"/>
+		<fileset file="${cscore.jar}"/>
+		<fileset file="${junit.jar}"/>
+		<fileset file="${log4j-api.jar}"/>
+		<fileset file="${log4j-core.jar}"/>
+		<fileset file="${hamcrest-core.jar}"/>
 	</path>
 
 	<target name="test-compile" depends="compile">
 		<mkdir dir="${test.build.dir}" />
-		<javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
-			<classpath refid="classpath.test" />
-		</javac>
+		<javac srcdir="${test.src.dir}" 
+			destdir="${test.build.dir}"
+			classpathref="classpath.test" 
+			includeantruntime="false" />
 	</target>
 
 	<target name="test" depends="test-compile">

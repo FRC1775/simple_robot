@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import org.apache.logging.log4j.*;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -15,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	private static final Logger log4j = LogManager.getLogger(Robot.class.getName());
 	public static OI oi;
 	public static Subsystem sensors;
 
@@ -33,7 +36,7 @@ public class Robot extends IterativeRobot {
 
 		        while (true) {
 			    		angle = gyro.getAngle();
-						System.out.println(f.format(angle));
+			    			log4j.info(f.format(angle));
 						Timer.delay(.5);
 		        }
 			}
@@ -46,4 +49,9 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();
 	};
+
+	@Override
+	public void teleopPeriodic() {
+		log4j.info("This is an info message.");
+	}
 }
