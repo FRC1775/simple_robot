@@ -5,3 +5,5 @@ build/
 bin/
 *.class
 reports/
+.gradle/
+.settings/

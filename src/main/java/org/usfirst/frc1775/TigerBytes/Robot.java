@@ -4,8 +4,10 @@ import java.text.DecimalFormat;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.apache.logging.log4j.*;
 
@@ -18,8 +20,7 @@ import org.apache.logging.log4j.*;
  */
 public class Robot extends IterativeRobot {
 	private static final Logger log4j = LogManager.getLogger(Robot.class.getName());
-	public static OI oi;
-	public static Subsystem sensors;
+	public static Command sensors;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -27,27 +28,30 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		RobotMap.init();
-		sensors = new Subsystem() {
-			private final ADXRS450_Gyro gyro = RobotMap.sensorsGyro;
-
-			public void log() {
-		        double angle = 0;
-		        DecimalFormat f = new DecimalFormat("#0.00");
-
-		        while (true) {
-			    		angle = gyro.getAngle();
-			    			log4j.info(f.format(angle));
-						Timer.delay(.5);
-		        }
+		sensors = new Command() {
+			private ADXRS450_Gyro gyro;
+			private DecimalFormat formatter;
+			
+			@Override
+			protected void initialize() {
+		        formatter = new DecimalFormat("#0.00");
+				gyro = RobotMap.sensorsGyro;
+				gyro.reset();
 			}
 
 			@Override
-			protected void initDefaultCommand() {
-				gyro.reset();
+			protected void execute() {
+		        double angle = 0;
+		    		angle = gyro.getAngle();
+	    			log4j.info(formatter.format(angle));
+				Timer.delay(.5);
+			}
+
+			@Override
+			protected boolean isFinished() {
+				return false;
 			}
 		};
-
-		oi = new OI();
 	};
 
 	@Override
