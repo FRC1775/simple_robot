@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.apache.logging.log4j.*;
 
@@ -27,7 +26,6 @@ public class Robot extends IterativeRobot {
 	 * for any initialization code.
 	 */
 	public void robotInit() {
-		RobotMap.init();
 		sensors = new Command() {
 			private ADXRS450_Gyro gyro;
 			private DecimalFormat formatter;
@@ -35,7 +33,7 @@ public class Robot extends IterativeRobot {
 			@Override
 			protected void initialize() {
 		        formatter = new DecimalFormat("#0.00");
-				gyro = RobotMap.sensorsGyro;
+				gyro = new ADXRS450_Gyro();
 				gyro.reset();
 			}
 
