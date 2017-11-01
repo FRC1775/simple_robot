@@ -8,13 +8,13 @@ We're using [GradleRIO](https://github.com/Open-RIO/GradleRIO) to build and depl
 
     ./gradlew build
     ./gradlew deploy
-    
- On Windows (in Powershell),
+
+On Windows (in Powershell),
  
 	.\gradlew.bat build
 	.\gradlew.bat deploy
- 	
- There's some issue with `gradlew` not finding the RobioRio initially. As a work-around, add `--info` (my guess is that the added delay of logging to stdout is giving Gradle enough time to find the new connection).
+ 
+There's some issue with `gradlew` not finding the RobioRio initially. As a work-around, add `--info` (my guess is that the added delay of logging to stdout is giving Gradle enough time to find the new connection).
  
  ## Roadmap
  
