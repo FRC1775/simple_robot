@@ -1,4 +1,4 @@
-package org.usfirst.frc1775.TigerBytes;
+package org.usfirst.frc1775.TigerBytes.commands;
 
 import java.text.DecimalFormat;
 

@@ -1,7 +1,7 @@
 package org.usfirst.frc1775.TigerBytes;
 
 
-import org.usfirst.frc1775.TigerBytes.GyroLogger;
+import org.usfirst.frc1775.TigerBytes.commands.GyroLogger;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
