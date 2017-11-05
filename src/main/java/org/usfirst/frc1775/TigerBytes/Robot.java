@@ -7,8 +7,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
-import org.apache.logging.log4j.*;
+//import org.apache.logging.log4j.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,15 +19,15 @@ import org.apache.logging.log4j.*;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	private static final Logger log4j = LogManager.getLogger(Robot.class.getName());
-	public static Command sensors;
+//	private static final Logger log4j = LogManager.getLogger(Robot.class.getName());
+	public static Command cmd;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
 	public void robotInit() {
-		sensors = new Command() {
+		cmd = new Command() {
 			private ADXRS450_Gyro gyro;
 			private DecimalFormat formatter;
 			
@@ -40,8 +41,9 @@ public class Robot extends IterativeRobot {
 			@Override
 			protected void execute() {
 		        double angle = 0;
-		    		angle = gyro.getAngle();
-	    			log4j.info(formatter.format(angle));
+		    	angle = gyro.getAngle();
+//		    	log4j.info(...);
+	    		System.out.println(formatter.format(angle));
 				Timer.delay(.5);
 			}
 
@@ -51,9 +53,16 @@ public class Robot extends IterativeRobot {
 			}
 		};
 	};
+	
+	@Override
+	public void teleopInit() { 
+		cmd.start(); 
+	}
 
 	@Override
 	public void teleopPeriodic() {
-		log4j.info("This is an info message.");
+//		log4j.info(("This is an info message.");
+		Scheduler.getInstance().enable();
+		Scheduler.getInstance().run();
 	}
 }
