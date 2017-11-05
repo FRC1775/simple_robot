@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-//import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,26 +18,42 @@ import edu.wpi.first.wpilibj.command.Command;
  * directory.
  */
 public class Robot extends IterativeRobot {
-//	private static final Logger log4j = LogManager.getLogger("TigerBot");
+	private static final Logger log4j = LogManager.getLogger(Robot.class.getName());
+	public static Command sensors;
 
-	private ADXRS450_Gyro gyro;
-	private DecimalFormat formatter;
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
-	@Override
 	public void robotInit() {
+		sensors = new Command() {
+			private ADXRS450_Gyro gyro;
+			private DecimalFormat formatter;
 			
-        formatter = new DecimalFormat("#0.00");
-		gyro = new ADXRS450_Gyro();
-		gyro.reset();
-		
-        double angle = 0;
-        while (true) {
-    		angle = gyro.getAngle();
-			System.out.println(formatter.format(angle));
-			Timer.delay(.5);
-        }
+			@Override
+			protected void initialize() {
+		        formatter = new DecimalFormat("#0.00");
+				gyro = new ADXRS450_Gyro();
+				gyro.reset();
+			}
+
+			@Override
+			protected void execute() {
+		        double angle = 0;
+		    		angle = gyro.getAngle();
+	    			log4j.info(formatter.format(angle));
+				Timer.delay(.5);
+			}
+
+			@Override
+			protected boolean isFinished() {
+				return false;
+			}
+		};
 	};
+
+	@Override
+	public void teleopPeriodic() {
+		log4j.info("This is an info message.");
+	}
 }
